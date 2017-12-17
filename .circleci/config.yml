@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  build:
+  test:
     docker:
       # First image listed on config.yml will be the "primary" image. Any build commands run in this container.
       - image: mysql:5.6
@@ -18,17 +18,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Update packages
+          name: Update Packages
           command: 'apt-get update'
       - run:
-          name: Update packages
+          name: Install MySQL Client
           command: 'apt-get install -y mysql-client'
-  test:
-    docker:
-      - image: mysql:5.6
-      - image: wordpress:4.9.1-php5.6-apache
-    steps:
-      - checkout
       - run:
           name: Check that Wordpress was installed
           command: 'mysql -uroot -hlocalhost -psecretpwd -Dwordpress -e "SHOW TABLES"'
