@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  build:
+    docker:
+      # First image listed on config.yml will be the "primary" image. Any build commands run in this container.
+      - image: mysql:5.6
+        environment:
+          MYSQL_ROOT_PASSWORD: secretpwd
+
+      # Second image listed here is the secondary container which runs in the same network of the primary container (they can connect as localhost)
+      - image: 4.9.1-php5.6-apache
+        environment:
+          WORDPRESS_DB_HOST: localhost
+          WORDPRESS_DB_NAME: wordpress
+          WORDPRESS_DB_USER: root
+          WORDPRESS_DB_PWD: secretpwd
+
+    steps:
+      - checkout
+      - run:
+          name: Update packages
+          command: 'sudo apt-get update'
+      - run:
+          name: Update packages
+          command: 'sudo apt-get install -y mysqlclient'
+      - run:
+          name: Update packages
+          command: 'mysql -uroot -hlocalhost -psecretpwd -Dwordpress -e "SHOW TABLES"'
