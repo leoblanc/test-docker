@@ -8,7 +8,7 @@ jobs:
           MYSQL_ROOT_PASSWORD: secretpwd
 
       # Second image listed here is the secondary container which runs in the same network of the primary container (they can connect as localhost)
-      - image: 4.9.1-php5.6-apache
+      - image: wordpress:4.9.1-php5.6-apache
         environment:
           WORDPRESS_DB_HOST: localhost
           WORDPRESS_DB_NAME: wordpress
