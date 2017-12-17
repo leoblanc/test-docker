@@ -5,7 +5,7 @@ jobs:
       # First image listed on config.yml will be the "primary" image. Any build commands run in this container.
       - image: wordpress:4.9.1-php5.6-apache
         environment:
-          WORDPRESS_DB_HOST: localhost
+          WORDPRESS_DB_HOST: 127.0.0.1
           WORDPRESS_DB_NAME: wordpress
           WORDPRESS_DB_USER: root
           WORDPRESS_DB_PWD: secretpwd
@@ -24,5 +24,11 @@ jobs:
           name: Install MySQL Client
           command: 'apt-get install -y mysql-client'
       - run:
+          name: Create Wordpress database
+          command: 'mysql -uroot -psecretpwd -h127.0.0.1 -e "CREATE DATABASE wordpress charset utf8"'
+      - run:
+          name: Install Wordpress
+          command: '/usr/local/bin/docker-entrypoint.sh apache2-foreground'
+      - run:
           name: Check that Wordpress was installed
-          command: 'sleep 60 && mysql -uroot -h127.0.0.1 -psecretpwd -Dwordpress -e "SHOW TABLES"'
+          command: 'mysql -uroot -h127.0.0.1 -psecretpwd -Dwordpress -e "SELECT * FROM wp_options"'
