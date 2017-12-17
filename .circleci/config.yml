@@ -12,7 +12,6 @@ jobs:
 
       # Second image listed here is the secondary container which runs in the same network of the primary container (they can connect as localhost)
       - image: mysql:5.6
-        command: [mysqld]
         environment:
           MYSQL_ROOT_PASSWORD: secretpwd
 
@@ -26,4 +25,4 @@ jobs:
           command: 'apt-get install -y mysql-client'
       - run:
           name: Check that Wordpress was installed
-          command: 'sleep 60 && mysql -uroot -hlocalhost -psecretpwd -Dwordpress -e "SHOW TABLES"'
+          command: 'sleep 60 && mysql -uroot -h127.0.0.1 -psecretpwd -Dwordpress -e "SHOW TABLES"'
