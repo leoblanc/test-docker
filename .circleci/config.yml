@@ -25,4 +25,4 @@ jobs:
           command: 'apt-get install -y mysql-client'
       - run:
           name: Check that Wordpress was installed
-          command: 'mysql -uroot -hlocalhost -psecretpwd -Dwordpress -e "SHOW TABLES"'
+          command: 'sleep 60 && mysql -uroot -hlocalhost -psecretpwd -Dwordpress -e "SHOW TABLES"'
