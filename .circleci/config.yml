@@ -12,7 +12,6 @@ jobs:
 
       # Second image listed here is the secondary container which runs in the same network of the primary container (they can connect as localhost)
       - image: mysql:5.6
-        command: ["mysqld"]
         environment:
           MYSQL_ROOT_PASSWORD: secretpwd
 
@@ -25,8 +24,8 @@ jobs:
           name: Install MySQL Client
           command: 'apt-get install -y mysql-client'
       - run:
-          name: Create Wordpress database
-          command: 'mysql -uroot -psecretpwd -h127.0.0.1 -e "CREATE DATABASE wordpress charset utf8"'
+          name: Create Wordpress database after server startup
+          command: 'sleep 10 && mysql -uroot -psecretpwd -h127.0.0.1 -e "CREATE DATABASE wordpress charset utf8"'
       - run:
           name: Install Wordpress
           command: '/usr/local/bin/docker-entrypoint.sh apache2-foreground'
