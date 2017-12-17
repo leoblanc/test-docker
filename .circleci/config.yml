@@ -23,6 +23,12 @@ jobs:
       - run:
           name: Update packages
           command: 'apt-get install -y mysql-client'
+  test:
+    docker:
+      - image: mysql:5.6
+      - image: wordpress:4.9.1-php5.6-apache
+    steps:
+      - checkout
       - run:
-          name: Update packages
+          name: Check that Wordpress was installed
           command: 'mysql -uroot -hlocalhost -psecretpwd -Dwordpress -e "SHOW TABLES"'
