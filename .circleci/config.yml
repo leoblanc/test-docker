@@ -22,7 +22,7 @@ jobs:
           command: 'apt-get update'
       - run:
           name: Update packages
-          command: 'apt-get install -y mysqlclient'
+          command: 'apt-get install -y mysql-client'
       - run:
           name: Update packages
           command: 'mysql -uroot -hlocalhost -psecretpwd -Dwordpress -e "SHOW TABLES"'
