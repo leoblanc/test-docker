@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  test:
+  build:
     docker:
       # First image listed on config.yml will be the "primary" image. Any build commands run in this container.
       - image: mysql:5.6
