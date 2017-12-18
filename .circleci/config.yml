@@ -29,9 +29,15 @@ jobs:
       - run:
           name: Ensure that Apache starts on foreground (wrapper used by docker-entrypoint.sh)
           command: 'sed -i "s,-DFOREGROUND,,g" /usr/local/bin/apache2-foreground'
-#      - run:
-#          name: Install Wordpress
-#          command: '/usr/local/bin/docker-entrypoint.sh apache2-foreground'
+      - run:
+          name: Install wp-cli
+          command: 'apt-get -y install wget && wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/bin/wp-cli && chmod +x /usr/bin/wp-cli'
+      - run:
+          name: Deploy Wordpress files (including wp-config.php)
+          command: '/usr/local/bin/docker-entrypoint.sh apache2-foreground'
+      - run:
+          name: Install Wordpress automatically
+          command: 'wp-cli core install --debug --allow-root --path=/root --url="http://localhost" --title="Wordpress" --admin_user=admin --admin_password="${WORDPRESS_DB_PASSWORD}" --admin_email="test@example.net"'
       - run:
           name: Check that Wordpress was installed
-          command: 'sleep 120 && mysql -uroot -h127.0.0.1 -psecretpwd -Dwordpress -e "SELECT * FROM wp_options"'
+          command: 'mysql -u"${WORDPRESS_DB_USER}" -h"${WORDPRESS_DB_HOST}" -p"${WORDPRESS_DB_PASSWORD}" -D"${WORDPRESS_DB_NAME}" -e "SELECT * FROM wp_options"'
