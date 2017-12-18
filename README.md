@@ -1,7 +1,6 @@
 # test-docker
 
 Test-Docker is a Research Project for Bimodal.
-
 It's a proof of concept to show how execute multiple containers in the same CircleCi build and run tests against them.
 
 See [using-multiple-docker-images](https://circleci.com/docs/2.0/executor-types/#using-multiple-docker-images)
