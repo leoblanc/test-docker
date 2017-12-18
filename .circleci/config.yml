@@ -26,9 +26,12 @@ jobs:
       - run:
           name: Create Wordpress database after server startup
           command: 'sleep 10 && mysql -uroot -psecretpwd -h127.0.0.1 -e "CREATE DATABASE wordpress charset utf8"'
-#      - run:
-#          name: Install Wordpress
-#          command: 'env && /usr/local/bin/docker-entrypoint.sh apache2-foreground'
+      - run:
+          name: Ensure that Apache starts on foreground (wrapper used by docker-entrypoint.sh)
+          command: 'sed -i "s,-DFOREGROUND,,g" /usr/local/bin/apache2-foreground'
+      - run:
+          name: Install Wordpress
+          command: '/usr/local/bin/docker-entrypoint.sh apache2-foreground'
       - run:
           name: Check that Wordpress was installed
-          command: 'mysql -uroot -h127.0.0.1 -psecretpwd -Dwordpress -e "SELECT * FROM wp_options"'
+          command: 'sleep 10 && mysql -uroot -h127.0.0.1 -psecretpwd -Dwordpress -e "SELECT * FROM wp_options"'
