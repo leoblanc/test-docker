@@ -29,9 +29,9 @@ jobs:
       - run:
           name: Ensure that Apache starts on foreground (wrapper used by docker-entrypoint.sh)
           command: 'sed -i "s,-DFOREGROUND,,g" /usr/local/bin/apache2-foreground'
-      - run:
-          name: Install Wordpress
-          command: '/usr/local/bin/docker-entrypoint.sh apache2-foreground'
+#      - run:
+#          name: Install Wordpress
+#          command: '/usr/local/bin/docker-entrypoint.sh apache2-foreground'
       - run:
           name: Check that Wordpress was installed
           command: 'sleep 120 && mysql -uroot -h127.0.0.1 -psecretpwd -Dwordpress -e "SELECT * FROM wp_options"'
