@@ -37,7 +37,7 @@ jobs:
           command: '/usr/local/bin/docker-entrypoint.sh apache2-foreground'
       - run:
           name: Install Wordpress automatically
-          command: 'wp-cli core install --debug --allow-root --path=/root --url="http://localhost" --title="Wordpress" --admin_user=admin --admin_password="${WORDPRESS_DB_PASSWORD}" --admin_email="test@example.net"'
+          command: 'wp-cli core install --debug --allow-root --path=/root/project --url="http://localhost" --title="Wordpress" --admin_user=admin --admin_password="${WORDPRESS_DB_PASSWORD}" --admin_email="test@example.net"'
       - run:
           name: Check that Wordpress was installed
           command: 'mysql -u"${WORDPRESS_DB_USER}" -h"${WORDPRESS_DB_HOST}" -p"${WORDPRESS_DB_PASSWORD}" -D"${WORDPRESS_DB_NAME}" -e "SELECT * FROM wp_options"'
