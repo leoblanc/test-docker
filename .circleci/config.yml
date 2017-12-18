@@ -34,4 +34,4 @@ jobs:
           command: '/usr/local/bin/docker-entrypoint.sh apache2-foreground'
       - run:
           name: Check that Wordpress was installed
-          command: 'sleep 10 && mysql -uroot -h127.0.0.1 -psecretpwd -Dwordpress -e "SELECT * FROM wp_options"'
+          command: 'sleep 120 && mysql -uroot -h127.0.0.1 -psecretpwd -Dwordpress -e "SELECT * FROM wp_options"'
