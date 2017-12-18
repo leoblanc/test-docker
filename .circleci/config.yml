@@ -28,7 +28,7 @@ jobs:
           command: 'sleep 10 && mysql -uroot -psecretpwd -h127.0.0.1 -e "CREATE DATABASE wordpress charset utf8"'
       - run:
           name: Install Wordpress
-          command: '/usr/local/bin/docker-entrypoint.sh apache2-foreground'
+          command: 'env && /usr/local/bin/docker-entrypoint.sh apache2-foreground'
       - run:
           name: Check that Wordpress was installed
           command: 'mysql -uroot -h127.0.0.1 -psecretpwd -Dwordpress -e "SELECT * FROM wp_options"'
