@@ -8,7 +8,7 @@ jobs:
           WORDPRESS_DB_HOST: 127.0.0.1
           WORDPRESS_DB_NAME: wordpress
           WORDPRESS_DB_USER: root
-          WORDPRESS_DB_PWD: secretpwd
+          WORDPRESS_DB_PASSWORD: secretpwd
 
       # Second image listed here is the secondary container which runs in the same network of the primary container (they can connect as localhost)
       - image: mysql:5.6
