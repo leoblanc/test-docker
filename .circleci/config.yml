@@ -25,6 +25,9 @@ jobs:
     docker:
       # First image listed on config.yml is the "primary" image. Every build commands will be executed by CircleCi inside of this container.
       - image: leoblanc/wordpress:v${CIRCLE_BUILD_NUM}
+       auth:
+          username: ${DOCKER_USER}
+          password: ${DOCKER_PASS}
         environment:
           - WORDPRESS_DB_HOST=127.0.0.1
           - WORDPRESS_DB_NAME=wordpress
