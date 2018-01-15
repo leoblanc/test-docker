@@ -69,3 +69,5 @@ workflows:
     jobs:
       - build-image
       - test-image
+        requires:
+        - build-image
