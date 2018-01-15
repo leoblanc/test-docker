@@ -3,7 +3,8 @@ version: 2
 jobs:
   # This section is used to build the new Docker image to be used later
   build-image:
-    machine: true
+    docker:
+    - image: circleci/golang:1.8
 
     steps:
       # Checkout code
