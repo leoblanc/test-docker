@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      # First image listed on config.yml will be the "primary" image. Any build commands run in this container.
+      # First image listed on config.yml is the "primary" image. Every build commands will be executed by CircleCi inside of this container.
       - image: wordpress:4.9.1-php5.6-apache
         environment:
           WORDPRESS_DB_HOST: 127.0.0.1
@@ -10,7 +10,7 @@ jobs:
           WORDPRESS_DB_USER: root
           WORDPRESS_DB_PASSWORD: secretpwd
 
-      # Second image listed here is the secondary container which runs in the same network of the primary container (they can connect as localhost)
+      # Thist second image is a "secondary" container which runs in the same network space of the primary container (they can communicate via "localhost")
       - image: mysql:5.6
         environment:
           MYSQL_ROOT_PASSWORD: secretpwd
@@ -18,26 +18,26 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Update Packages
+          name: Update Packages on the primary container
           command: 'apt-get update'
       - run:
-          name: Install MySQL Client
+          name: Install MySQL Client on the primary container
           command: 'apt-get install -y mysql-client'
       - run:
-          name: Create Wordpress database after server startup
+          name: Create Wordpress database on the MySQL container after server startup
           command: 'sleep 10 && mysql -uroot -psecretpwd -h127.0.0.1 -e "CREATE DATABASE wordpress charset utf8"'
       - run:
-          name: Ensure that Apache starts on foreground (wrapper used by docker-entrypoint.sh)
+          name: Ensure that Apache starts on foreground (this script is used by docker-entrypoint.sh)
           command: 'sed -i "s,-DFOREGROUND,,g" /usr/local/bin/apache2-foreground'
       - run:
-          name: Install wp-cli
+          name: Install wp-cli on the main container
           command: 'apt-get -y install wget && wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar -O /usr/bin/wp-cli && chmod +x /usr/bin/wp-cli'
       - run:
-          name: Deploy Wordpress files (including wp-config.php)
+          name: Deploy Wordpress files (including wp-config.php, database information is read from provided environment variables)
           command: '/usr/local/bin/docker-entrypoint.sh apache2-foreground'
       - run:
-          name: Install Wordpress automatically
+          name: Install Wordpress tables automatically using wp-cli
           command: 'wp-cli core install --debug --allow-root --path=/root/project --url="http://localhost" --title="Wordpress" --admin_user=admin --admin_password="${WORDPRESS_DB_PASSWORD}" --admin_email="test@example.net"'
       - run:
-          name: Check that Wordpress was installed
+          name: Check that Wordpress was installed (tables should exists on the new database)
           command: 'mysql -u"${WORDPRESS_DB_USER}" -h"${WORDPRESS_DB_HOST}" -p"${WORDPRESS_DB_PASSWORD}" -D"${WORDPRESS_DB_NAME}" -e "SELECT * FROM wp_options"'

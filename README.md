@@ -1,8 +1,8 @@
 # test-docker
 
-Test-Docker is a Research Project for Bimodal.
+Test-Docker is a Research Project for Bimodal. It's stored on [GitHub](https://github.com/leoblanc/test-docker). Documentation is available on the "docs" directory.
 
-It's a proof of concept to show how execute multiple containers in the same CircleCi build and run tests against them.
+It's a proof of concept to show how execute multiple containers in the same CircleCi build and run tests against them (see .circleci subdirectory)
 
 See [using-multiple-docker-images](https://circleci.com/docs/2.0/executor-types/#using-multiple-docker-images)
 
