@@ -2,10 +2,10 @@
 
 set -e
 
-DOCKER_IMAGE=leoblanc/wordpress:v${CIRCLE_BUILD_NUM}
+DOCKER_IMAGE="leoblanc/wordpress:v${CIRCLE_BUILD_NUM}"
 
-docker build -t ${DOCKER_IMAGE} .
+docker build -t "${DOCKER_IMAGE}" .
 
-docker login -u ${DOCKER_USER} -p ${DOCKER_PASS} hub.docker.com
+docker login --username="${DOCKER_USER}" --password="${DOCKER_PASS}" https://hub.docker.com/v1
 
-docker push ${DOCKER_IMAGE}
+docker push "${DOCKER_IMAGE}"
