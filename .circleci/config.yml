@@ -26,15 +26,15 @@ jobs:
       # First image listed on config.yml is the "primary" image. Every build commands will be executed by CircleCi inside of this container.
       - image: leoblanc/wordpress:v${CIRCLE_BUILD_NUM}
         environment:
-          WORDPRESS_DB_HOST: 127.0.0.1
-          WORDPRESS_DB_NAME: wordpress
-          WORDPRESS_DB_USER: root
-          WORDPRESS_DB_PASSWORD: secretpwd
+          - WORDPRESS_DB_HOST=127.0.0.1
+          - WORDPRESS_DB_NAME=wordpress
+          - WORDPRESS_DB_USER=root
+          - WORDPRESS_DB_PASSWORD=secretpwd
 
       # Thist second image is a "secondary" container which runs in the same network space of the primary container (they can communicate via "localhost")
       - image: mysql:5.6
         environment:
-          MYSQL_ROOT_PASSWORD: secretpwd
+          - MYSQL_ROOT_PASSWORD=secretpwd
 
     steps:
       - checkout
