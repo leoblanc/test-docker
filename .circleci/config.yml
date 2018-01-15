@@ -2,7 +2,7 @@ version: 2
 
 jobs:
   # This section is used to build the new Docker image to be used later
-  build-image:
+  build:
     docker:
     - image: circleci/golang:1.8
 
@@ -21,7 +21,7 @@ jobs:
             /bin/bash .circleci/docker-build.sh
 
   # This section is to test that the new image really works as expected
-  test-image:
+  test:
     docker:
       # First image listed on config.yml is the "primary" image. Every build commands will be executed by CircleCi inside of this container.
       - image: leoblanc/wordpress:v${CIRCLE_BUILD_NUM}
@@ -62,12 +62,3 @@ jobs:
       - run:
           name: Check that Wordpress was installed (tables should exists on the new database)
           command: 'mysql -u"${WORDPRESS_DB_USER}" -h"${WORDPRESS_DB_HOST}" -p"${WORDPRESS_DB_PASSWORD}" -D"${WORDPRESS_DB_NAME}" -e "SELECT * FROM wp_options"'
-
-workflows:
-  version: 2
-  build-test:
-    jobs:
-      - build-image
-      - test-image
-        requires:
-        - build-image
