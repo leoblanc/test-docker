@@ -1,9 +1,28 @@
 version: 2
 jobs:
+  # This section is used to build the new Docker image to be used later
+  build:
+    machine: true
+
+    steps:
+      # Checkout code
+      - checkout
+
+      - run:
+          name: Install Docker Client
+          command: |
+            /bin/bash .circleci/install-docker.sh
+
+      - run:
+          name: Build and Push to Docker Hub
+          command: |
+            /bin/bash .circleci/docker-build.sh
+
+  # This section is to test that the new image really works as expected
   build:
     docker:
       # First image listed on config.yml is the "primary" image. Every build commands will be executed by CircleCi inside of this container.
-      - image: wordpress:4.9.1-php5.6-apache
+      - image: leoblanc/wordpress:v${CIRCLE_BUILD_NUM}
         environment:
           WORDPRESS_DB_HOST: 127.0.0.1
           WORDPRESS_DB_NAME: wordpress
