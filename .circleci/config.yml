@@ -61,6 +61,9 @@ jobs:
           name: Check that Wordpress was installed (tables should exists on the new database)
           command: 'mysql -u"${WORDPRESS_DB_USER}" -h"${WORDPRESS_DB_HOST}" -p"${WORDPRESS_DB_PASSWORD}" -D"${WORDPRESS_DB_NAME}" -e "SELECT * FROM wp_options"'
       - run:
+          name: Copy files to www directory
+          command: 'cp -R /root/project/* /var/www/html'
+      - run:
           name: Check that Wordpress website is reacheable using InSpec
           command: 'inspec exec /tests/wordpress-online.rb'
 
