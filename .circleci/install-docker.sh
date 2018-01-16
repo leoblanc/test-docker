@@ -2,7 +2,7 @@
 
 set -e
 
-VERSION="17.03.0-ce"
+VERSION="17.06.0-ce"
 
 sudo apt-get update
 sudo apt-get -y install curl
