@@ -3,7 +3,7 @@ FROM wordpress:4.9.1-php5.6-apache
 
 # Install Inspec (requires Ruby 2.3+, but Debian Jessie supplies Ruby 2.2)
 RUN apt-get update
-RUN apt-get -y install zlib1g-dev libssl-dev libreadline-dev libgdbm-dev openssl
+RUN apt-get -y install wget zlib1g-dev libssl-dev libreadline-dev libgdbm-dev openssl
 RUN mkdir /tmp/ruby
 RUN cd /tmp/ruby && wget https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz
 RUN tar xvfz ruby-2.3.0.tar.gz
