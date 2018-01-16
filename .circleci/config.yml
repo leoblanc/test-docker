@@ -11,11 +11,6 @@ jobs:
       - checkout
 
       - run:
-          name: Install Docker Client
-          command: |
-            /bin/bash .circleci/install-docker.sh
-
-      - run:
           name: Build and Push to Docker Hub
           command: |
             /bin/bash .circleci/docker-build.sh
