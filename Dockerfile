@@ -1,6 +1,9 @@
 # Based on https://github.com/docker-library/wordpress/blob/master/php5.6/apache/Dockerfile
 FROM wordpress:4.9.1-php5.6-apache
 
+# Testing build
+RUN touch /root/testing
+
 # Install Inspec (requires Ruby 2.3+, but Debian Jessie supplies Ruby 2.2)
 RUN apt-get update
 RUN apt-get -y install wget zlib1g-dev libssl-dev libreadline-dev libgdbm-dev openssl
