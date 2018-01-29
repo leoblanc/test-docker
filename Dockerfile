@@ -2,7 +2,7 @@
 FROM wordpress:4.9.1-php5.6-apache
 
 # Testing build
-RUN touch /root/testing
+RUN touch /root/test2
 
 # Install Inspec (requires Ruby 2.3+, but Debian Jessie supplies Ruby 2.2)
 RUN apt-get update
